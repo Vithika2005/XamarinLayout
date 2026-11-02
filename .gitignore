@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# .NET build output
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+
+# Android / Xamarin
+*.apk
+*.aab
+*.ap_
+Resources/Resource.designer.cs
+
+# Misc
+*.log
+*.tmp
+TestResults/
+publish/

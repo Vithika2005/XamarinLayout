@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LayoutsDemo.MainPage"
+             Title="Dashboard"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <ContentPage.Resources>
+        <!-- Reusable styles for the FlexLayout "tag chips" -->
+        <Style x:Key="TagFrame" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#512BD4" />
+            <Setter Property="BorderColor" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="HasShadow" Value="False" />
+        </Style>
+        <Style x:Key="TagLabel" TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- LAYOUT 1: ScrollView - outermost element, makes the whole page scrollable.
+         It may hold exactly ONE child. -->
+    <ScrollView>
+
+        <!-- LAYOUT 2: vertical StackLayout - the backbone, stacks every section top to bottom -->
+        <StackLayout Orientation="Vertical" Spacing="20" Padding="20">
+
+            <!-- ============ SECTION A: HEADER ============ -->
+            <!-- (MAUI note: a Grid is used to push the bell to the right edge, because MAUI's
+                 StackLayout ignores the old "FillAndExpand" options. See docs/EXPERIMENT_REPORT.md) -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Dashboard"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextDark}"
+                       VerticalOptions="Center" />
+
+                <!-- LAYOUT 3: AbsoluteLayout - bell icon with an OVERLAPPING red badge.
+                     LayoutBounds = x, y, width, height (absolute device-independent units) -->
+                <AbsoluteLayout Grid.Column="1" WidthRequest="48" HeightRequest="48">
+                    <Image Source="bell.png"
+                           AbsoluteLayout.LayoutBounds="0,8,40,40" />
+                    <BoxView Color="#E53935"
+                             CornerRadius="9"
+                             AbsoluteLayout.LayoutBounds="28,0,18,18" />
+                    <Label Text="3"
+                           TextColor="White"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           AbsoluteLayout.LayoutBounds="28,0,18,18" />
+                </AbsoluteLayout>
+            </Grid>
+
+            <!-- ============ SECTION B: PROFILE CARD (Frame + Grid) ============ -->
+            <Frame CornerRadius="16" Padding="16" HasShadow="True"
+                   BackgroundColor="White" BorderColor="Transparent">
+
+                <!-- LAYOUT 4: Grid with 2 columns: fixed 80 + star-sized remainder -->
+                <Grid ColumnDefinitions="80,*" ColumnSpacing="16">
+
+                    <Image Grid.Column="0"
+                           Source="profile.png"
+                           WidthRequest="80" HeightRequest="80"
+                           Aspect="AspectFill"
+                           VerticalOptions="Center" />
+
+                    <!-- A StackLayout NESTED inside a Grid cell -->
+                    <StackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="Alex Morgan"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextDark}" />
+                        <Label Text="Mobile UI Designer"
+                               FontSize="14"
+                               TextColor="{StaticResource TextMuted}" />
+                    </StackLayout>
+                </Grid>
+            </Frame>
+
+            <!-- ============ SECTION C: STATISTICS ROW ============ -->
+            <!-- Three equal columns; each cell holds a small vertical StackLayout (number + caption).
+                 (MAUI note: Grid "*,*,*" gives the even spacing that "CenterAndExpand" gave in Xamarin.Forms.) -->
+            <Grid ColumnDefinitions="*,*,*">
+                <StackLayout Grid.Column="0" Spacing="2" HorizontalOptions="Center">
+                    <Label Text="128" FontSize="22" FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
+                    <Label Text="Posts" FontSize="12"
+                           TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout Grid.Column="1" Spacing="2" HorizontalOptions="Center">
+                    <Label Text="4.2K" FontSize="22" FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
+                    <Label Text="Followers" FontSize="12"
+                           TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout Grid.Column="2" Spacing="2" HorizontalOptions="Center">
+                    <Label Text="310" FontSize="22" FontAttributes="Bold"
+                           TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
+                    <Label Text="Following" FontSize="12"
+                           TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                </StackLayout>
+            </Grid>
+
+            <!-- Divider: a BoxView used as a thin horizontal line -->
+            <BoxView HeightRequest="1" Color="#D9DDE7" HorizontalOptions="Fill" />
+
+            <!-- ============ SECTION D: TAG LIST (FlexLayout) ============ -->
+            <Label Text="Interests" FontSize="18" FontAttributes="Bold"
+                   TextColor="{StaticResource TextDark}" />
+
+            <!-- LAYOUT 5: FlexLayout with Wrap="Wrap" - chips flow onto a new line when the row is full -->
+            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Start">
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Design" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Mobile" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="UI" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Xamarin" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Layouts" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Grid" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="FlexLayout" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="AbsoluteLayout" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="ScrollView" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="C#" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="XAML" Style="{StaticResource TagLabel}" /></Frame>
+            </FlexLayout>
+
+            <!-- ============ SECTION E: CLOSING BUTTON ============ -->
+            <Button Text="View Full Profile"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    HorizontalOptions="Fill"
+                    Clicked="OnViewProfileClicked" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

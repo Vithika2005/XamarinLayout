@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LayoutsDemoApp.MainPage"
+             Title="Dashboard"
+             BackgroundColor="#F4F6FB">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TagFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#512BD4" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="16" />
+                <Setter Property="Padding" Value="14,6" />
+                <Setter Property="Margin" Value="0,0,8,8" />
+                <Setter Property="HasShadow" Value="False" />
+            </Style>
+            <Style x:Key="TagLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Step 1: ScrollView = outermost element (exactly ONE child) -->
+    <ScrollView>
+
+        <!-- Step 1: vertical StackLayout = backbone of the page -->
+        <StackLayout Orientation="Vertical" Spacing="20" Padding="20">
+
+            <!-- Step 2: HEADER = horizontal StackLayout (title left, AbsoluteLayout bell right) -->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Dashboard"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#1F2430"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="Center" />
+
+                <AbsoluteLayout WidthRequest="48" HeightRequest="48" HorizontalOptions="End">
+                    <Image Source="bell.png"
+                           AbsoluteLayout.LayoutBounds="0,8,40,40" />
+                    <BoxView Color="#E53935"
+                             CornerRadius="9"
+                             AbsoluteLayout.LayoutBounds="28,0,18,18" />
+                    <Label Text="3"
+                           TextColor="White"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           AbsoluteLayout.LayoutBounds="28,0,18,18" />
+                </AbsoluteLayout>
+            </StackLayout>
+
+            <!-- Step 3: PROFILE = Frame containing a 2-column Grid -->
+            <Frame CornerRadius="16" Padding="16" HasShadow="True" BackgroundColor="White">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0"
+                           Source="profile.png"
+                           WidthRequest="80" HeightRequest="80"
+                           Aspect="AspectFill"
+                           VerticalOptions="Center" />
+
+                    <StackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="Alex Morgan" FontSize="20" FontAttributes="Bold" TextColor="#1F2430" />
+                        <Label Text="Mobile UI Designer" FontSize="14" TextColor="#6B7280" />
+                    </StackLayout>
+                </Grid>
+            </Frame>
+
+            <!-- Step 4: STATS = horizontal StackLayout of three small vertical StackLayouts -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand">
+                    <Label Text="128" FontSize="22" FontAttributes="Bold" TextColor="#1F2430" HorizontalTextAlignment="Center" />
+                    <Label Text="Posts" FontSize="12" TextColor="#6B7280" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand">
+                    <Label Text="4.2K" FontSize="22" FontAttributes="Bold" TextColor="#1F2430" HorizontalTextAlignment="Center" />
+                    <Label Text="Followers" FontSize="12" TextColor="#6B7280" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Spacing="2" HorizontalOptions="CenterAndExpand">
+                    <Label Text="310" FontSize="22" FontAttributes="Bold" TextColor="#1F2430" HorizontalTextAlignment="Center" />
+                    <Label Text="Following" FontSize="12" TextColor="#6B7280" HorizontalTextAlignment="Center" />
+                </StackLayout>
+            </StackLayout>
+
+            <BoxView HeightRequest="1" Color="#D9DDE7" HorizontalOptions="FillAndExpand" />
+
+            <!-- Step 5: TAGS = FlexLayout with Wrap enabled -->
+            <Label Text="Interests" FontSize="18" FontAttributes="Bold" TextColor="#1F2430" />
+
+            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Start">
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Design" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Mobile" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="UI" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Xamarin" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Layouts" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="Grid" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="FlexLayout" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="AbsoluteLayout" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="ScrollView" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="C#" Style="{StaticResource TagLabel}" /></Frame>
+                <Frame Style="{StaticResource TagFrame}"><Label Text="XAML" Style="{StaticResource TagLabel}" /></Frame>
+            </FlexLayout>
+
+            <!-- Step 6: closing Button -->
+            <Button Text="View Full Profile"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnViewProfileClicked" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
